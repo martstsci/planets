@@ -6,5 +6,6 @@ Phobos and Deimos are not nice to us.
 
 Andre: Found a pyramid on Mars.
 
-That one is also red!
+That one is also blue!
+
 
