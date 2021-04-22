@@ -1,0 +1,16 @@
+Mar 25, 2020:
+
+Run the pipeline on the OTIS data of the lamp exposure listed in Table
+3-2 of the NAP, JOBID = 4791. This is a classic example of using the
+already-built superbias and superdark reference files from CRDS for
+the NIS readout (there is no matching background exposure as for the
+OTIS NISRAPID exposure). All are at ~37 K.
+
+In principle, there is no need to specify the superbias and superdark
+to use since the pipeline will automatically grab the correct one from
+CRDS. But I do it here to show how these files can be specified
+manually.
+
+The _uncal.fits exposure is available in MAST.
+
+4791  LINE2/5  jw00305001001_02103_00001_nis_uncal.fits
