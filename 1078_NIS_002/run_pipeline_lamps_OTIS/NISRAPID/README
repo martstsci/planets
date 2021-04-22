@@ -1,0 +1,60 @@
+Mar 25, 2020:
+
+Run the pipeline on the OTIS data of the lamp exposure listed in Table
+3-2 of the NAP, JOBID = 4786 (lamp off) and 4788 (LINE2/5). 
+
+The _uncal.fits exposures are available in MAST.
+
+4786	OTIS	LINE2/OFF	1	1	6	jw00305001001_02101_00001_nis_uncal.fits
+4788	OTIS	LINE2/5	 	1       1	6	jw00305001001_02102_00001_nis_uncal.fits
+
+
+We follow the steps we will do in orbit. 
+
+1. Create the superbias from the background lamp-off exposure using the script
+create_superbias_from_first_group.py with these arguments.
+
+(jwstb74) witserv1:/home/martel/Python/JWST_Pipeline/reference_files/superbias% ./create_superbias_from_first_group.py -d  '/witserv/data18/martel/commissioning/1078/lamps_OTIS/NISRAPID/background/' -f 'superbias_OTIS_NISRAPID_NAP_002_1078.fits' -t 'NAP-002/1078 OTIS NISRAPID Superbias'
+Appending: jw00305001001_02101_00001_nis_uncal.fits
+    
+Calculating the mean cube with sigma clipping.
+   
+Number of outliers: 0
+   
+(jwstb74) witserv1:/home/martel/Python/JWST_Pipeline/reference_files/superbias%
+
+This will create the superbias file superbias_OTIS_NISRAPID_NAP_002_1078.fits.
+
+
+2. Create the _ramp.fits exposure from the background lamp-off
+exposure _uncal.fits using the pipeline and the superbias from the
+above step. The dark correction step is skipped.
+
+(jwstb74) witserv1:/home/martel/Python/commissioning/NAPs/NIS-002_1078/run_pipeline_lamps_OTIS/NISRAPID% ./stage1_with_manual_superbias_and_superdark.py -d '/witserv/data18/martel/commissioning/1078/lamps_OTIS/NISRAPID/background/' -c 'calwebb_detector1_1078_lamps_OTIS_NISRAPID_Background.cfg'
+
+
+The ramp exposure is jw00305001001_02101_00001_nis_ramp.fits and as expected, the first group has a null
+value for all pixels.
+
+3. Before using this ramp exposure as a dark reference file in the
+   pipeline, its format and header keywords must be slightly
+   manipulated.
+
+./create_superdark_reference.py -d
+'/witserv/data18/martel/commissioning/1078/lamps_OTIS/NISRAPID/background/stage1/'
+-f 'superdark_OTIS_NISRAPID_NAP_002_1078.fits' -t 'NAP-002/1078 OTIS
+NISRAPID Superdark'
+
+   This creates the superdark superdark_OTIS_NISRAPID_NAP_002_1078.fits.
+
+
+3. Process the lamp-on exposure with the pipeline with the superbias
+   and superdark created above.
+
+(jwstb74)
+witserv1:/home/martel/Python/commissioning/NAPs/NIS-002_1078/run_pipeline_lamps_OTIS/NISRAPID%
+./stage1_with_manual_superbias_and_superdark.py -d '/witserv/data18/martel/commissioning/1078/lamps_OTIS/NISRAPID/lamp/' -c 'calwebb_detector1_1078_lamps_OTIS_NISRAPID_Lamp.cfg'
+
+
+
+
