@@ -1,0 +1,34 @@
+Mar 24, 2020:
+
+Run the pipeline on the CV3 data of the lamp exposures listed in Table
+3-2 of the NAP. This is a classic example of using the already-built
+superbias and supdark reference files from CRDS. All are at ~37 K.
+
+In principle, there is no need to specify the superbias and superdark
+to use since the pipeline will automatically grab the correct one from
+CRDS. But I do it here to show how these files can be specified
+manually.
+
+The FITSWriter files were converted to _uncal.fits with: 
+
+/JWST_Pipeline/FITSWriter_to_DMS/
+FITSWriter_to_DMS.py and update_DMS_headers.py using 10782.prop
+
+
+FLAT2/5   35423  NIST72-G700-6002210714_1_496_SE_2016-01-02T21h14m14.fits    jw10782001001_01101_00001_NIRISS_uncal.fits
+FLAT1/5   35495  NIST72-G700-F1-6003005746_1_496_SE_2016-01-03T01h07m25.fits jw10782001001_01102_00001_NIRISS_uncal.fits
+LINE1/5   35496  NIST72-G700-S1-6003010144_1_496_SE_2016-01-03T01h07m35.fits jw10782001001_01103_00001_NIRISS_uncal.fits
+LINE2/5   35498  NIST72-G700-S2-6003010500_1_496_SE_2016-01-03T01h13m45.fits jw10782001001_01104_00001_NIRISS_uncal.fits
+
+
+To assemble the configuration files:
+
+witserv2:/home/martel/Python/commissioning/NAPs/NIS-002_1078/run_pipeline_CV3_lamps% pipe_start
+
+(jwstb74) witserv2:/home/martel/Python/commissioning/NAPs/NIS-002_1078/run_pipeline_CV3_lamps% collect_pipeline_cfgs .
+WARNING: . already exists, do you want to overwrite the
+    contents of this directory?  Enter yes or no [yes]: yes
+
+
+
+
